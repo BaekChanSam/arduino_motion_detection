@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/sl_vital_tile"
+    android:paddingHorizontal="11dp"
+    android:paddingVertical="10dp">
+
+    <TextView
+        android:id="@+id/vLabel"
+        style="@style/SL.Text.Mono"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="HEART · 심박"
+        android:textColor="@color/sl_faint"
+        android:textSize="9sp"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="bottom"
+        android:paddingTop="2dp">
+
+        <TextView
+            android:id="@+id/vValue"
+            style="@style/SL.Text.Mono"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="142"
+            android:textColor="@color/sl_text"
+            android:textSize="22sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/vUnit"
+            style="@style/SL.Text.Mono"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="bpm"
+            android:textColor="@color/sl_dim"
+            android:textSize="10sp"
+            android:paddingStart="3dp"
+            android:paddingBottom="2dp"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/vFoot"
+        style="@style/SL.Text.Mono"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="↑ 위험"
+        android:textColor="@color/sl_dim"
+        android:textSize="9sp"
+        android:paddingTop="4dp"/>
+</LinearLayout>

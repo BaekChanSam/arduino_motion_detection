@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="sl_screen_padding">14dp</dimen>
+    <dimen name="sl_card_radius">14dp</dimen>
+    <dimen name="sl_card_radius_sm">10dp</dimen>
+    <dimen name="sl_card_radius_xs">8dp</dimen>
+    <dimen name="sl_card_padding">14dp</dimen>
+    <dimen name="sl_section_gap">12dp</dimen>
+
+    <dimen name="sl_text_micro">9sp</dimen>
+    <dimen name="sl_text_mono">10sp</dimen>
+    <dimen name="sl_text_caption">11sp</dimen>
+    <dimen name="sl_text_body_sm">12sp</dimen>
+    <dimen name="sl_text_body">13sp</dimen>
+    <dimen name="sl_text_lg">17sp</dimen>
+    <dimen name="sl_text_xl">22sp</dimen>
+</resources>

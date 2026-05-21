@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/sl_body_row_normal"
+    android:gravity="center_vertical"
+    android:paddingHorizontal="9dp"
+    android:paddingVertical="7dp"
+    android:layout_marginBottom="6dp">
+
+    <View
+        android:id="@+id/dot"
+        android:layout_width="6dp"
+        android:layout_height="6dp"
+        android:background="@drawable/sl_dot_ok"
+        android:layout_marginEnd="6dp"/>
+
+    <TextView
+        android:id="@+id/label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="머리"
+        android:textColor="@color/sl_text"
+        android:textSize="11sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/value"
+        style="@style/SL.Text.Mono"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="정상"
+        android:textColor="@color/sl_dim"
+        android:textSize="10sp"
+        android:textStyle="bold"/>
+</LinearLayout>

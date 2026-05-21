@@ -1,0 +1,16 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.MyApplication" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="colorPrimary">@color/sl_accent</item>
+        <item name="android:windowBackground">@color/sl_bg</item>
+        <item name="android:statusBarColor">@color/sl_black</item>
+        <item name="android:navigationBarColor">@color/sl_black</item>
+        <item name="android:textColor">@color/sl_text</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="SL.Text.Mono" parent="">
+        <item name="android:fontFamily">monospace</item>
+        <item name="android:letterSpacing">0.08</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+</resources>

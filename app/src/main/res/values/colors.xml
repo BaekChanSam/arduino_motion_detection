@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- SafetyLink design tokens -->
+    <color name="sl_bg">#0A0C0F</color>
+    <color name="sl_panel">#13171C</color>
+    <color name="sl_panel_2">#191E25</color>
+    <color name="sl_line">#222932</color>
+    <color name="sl_text">#F1F4F8</color>
+    <color name="sl_dim">#8893A2</color>
+    <color name="sl_faint">#5A6573</color>
+
+    <color name="sl_critical">#FF3A2F</color>
+    <color name="sl_critical_dim">#3A1414</color>
+    <color name="sl_warn">#FFA524</color>
+    <color name="sl_warn_dim">#3A2410</color>
+    <color name="sl_ok">#2EE08A</color>
+    <color name="sl_ok_dim">#0F2A1E</color>
+    <color name="sl_accent">#37C7FF</color>
+    <color name="sl_accent_dim">#0D2733</color>
+
+    <color name="sl_black">#000000</color>
+    <color name="sl_white">#FFFFFFFF</color>
+
+    <color name="sl_critical_glow_25">#40FF3A2F</color>
+</resources>

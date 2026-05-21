@@ -1,0 +1,47 @@
+plugins {
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+}
+
+android {
+    namespace 'com.example.data'
+    compileSdk 36
+
+    defaultConfig {
+        minSdk 26
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    kotlinOptions {
+        jvmTarget = '11'
+    }
+}
+
+dependencies {
+    implementation project(':domain')
+    implementation project(':entity')
+    implementation project(':common')
+
+    implementation libs.androidx.core.ktx
+    implementation libs.kotlinx.coroutines.core
+    implementation libs.kotlinx.coroutines.android
+
+    // Network
+    implementation libs.retrofit.core
+    implementation libs.retrofit.converter.moshi
+    implementation libs.okhttp.core
+    implementation libs.okhttp.logging.interceptor
+    implementation libs.moshi.kotlin
+
+    testImplementation libs.junit
+}
