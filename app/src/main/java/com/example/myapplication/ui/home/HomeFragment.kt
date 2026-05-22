@@ -1,9 +1,15 @@
 package com.example.myapplication.ui.home
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.media.AudioManager
+import android.media.ToneGenerator
 import android.net.Uri
+import android.os.VibrationEffect
+import android.os.Vibrator
+import android.os.VibratorManager
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Build
@@ -59,6 +65,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     }
 
     private val BASELINE = 25f
+
+    // critical 전이 추적 — false→true 순간에만 1회 진동/비프
+    private var wasCritical = false
+    private var toneGenerator: ToneGenerator? = null
 
     private val requiredPermissions: Array<String>
         get() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -131,6 +141,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         Timber.tag("UI").d("HomeFragment.onDestroyView")
         handler.removeCallbacks(elapsedTick)
         handler.removeCallbacks(chartTick)
+        toneGenerator?.release()
+        toneGenerator = null
         super.onDestroyView()
     }
 
@@ -210,6 +222,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
         val isCritical = scenario == "down" || scenario == "head" || scenario == "fire"
         val isAlarm = s.isAlarm
+
+        // critical 진입 순간(rising edge)에만 진동 + 비프
+        if (isCritical && !wasCritical) {
+            triggerCriticalAlert()
+        }
+        wasCritical = isCritical
 
         binding.headerRoot.setBackgroundResource(
             if (scenario == "down") R.drawable.sl_header_critical_bg else 0
@@ -335,6 +353,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         bindBodyRow(binding.rowLegR.root, getString(R.string.sl_body_leg_r), false, "--")
 
         resetChartToBaseline()
+        wasCritical = false
     }
 
     /** 차트 값을 즉시 베이스라인 + 파랑 라인으로 초기화. */
@@ -476,6 +495,47 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     }
 
     private fun col(@ColorRes id: Int) = ContextCompat.getColor(requireContext(), id)
+
+    // ─────────────────────────────────────────────────────
+    // Critical 진입 시 진동 + 짧은 비프
+    // ─────────────────────────────────────────────────────
+    private fun triggerCriticalAlert() {
+        Timber.tag("UI").d("⚠ critical alert → vibrate + beep")
+        vibrate()
+        beep()
+    }
+
+    private fun vibrate() {
+        val vibrator = getVibrator() ?: return
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibrator.vibrate(
+                VibrationEffect.createOneShot(300, VibrationEffect.DEFAULT_AMPLITUDE)
+            )
+        } else {
+            @Suppress("DEPRECATION")
+            vibrator.vibrate(300)
+        }
+    }
+
+    private fun getVibrator(): Vibrator? {
+        val ctx = context ?: return null
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val vm = ctx.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as? VibratorManager
+            vm?.defaultVibrator
+        } else {
+            @Suppress("DEPRECATION")
+            ctx.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
+        }
+    }
+
+    private fun beep() {
+        runCatching {
+            if (toneGenerator == null) {
+                toneGenerator = ToneGenerator(AudioManager.STREAM_ALARM, 90)
+            }
+            toneGenerator?.startTone(ToneGenerator.TONE_CDMA_ABBR_ALERT, 300)
+        }.onFailure { Timber.tag("UI").w(it, "beep failed") }
+    }
 
     private data class AlertBannerData(
         @DrawableRes val bannerBg: Int,
