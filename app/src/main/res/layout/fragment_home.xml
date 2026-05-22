@@ -422,12 +422,12 @@
                         android:clickable="true"
                         android:focusable="true">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="◐"
-                            android:textColor="@color/sl_accent"
-                            android:textSize="18sp" />
+                        <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:src="@drawable/ic_phone_24"
+                            android:contentDescription="@null"
+                            app:tint="@color/sl_accent" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -446,41 +446,6 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:background="@drawable/sl_btn_action"
-                        android:padding="11dp"
-                        android:layout_marginEnd="8dp"
-                        android:clickable="true"
-                        android:focusable="true">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="◈"
-                            android:textColor="@color/sl_accent"
-                            android:textSize="18sp" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/sl_btn_locate"
-                            android:textColor="@color/sl_text"
-                            android:textSize="12sp"
-                            android:textStyle="bold"
-                            android:paddingTop="3dp" />
-                        <TextView
-                            style="@style/SL.Text.Mono"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/sl_btn_locate_sub"
-                            android:textColor="@color/sl_faint"
-                            android:textSize="9sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
                         android:id="@+id/btnConnect"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -492,12 +457,13 @@
                         android:clickable="true"
                         android:focusable="true">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="◉"
-                            android:textColor="@color/sl_accent"
-                            android:textSize="18sp" />
+                        <ImageView
+                            android:id="@+id/btnConnectIcon"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:src="@drawable/ic_bluetooth_24"
+                            android:contentDescription="@null"
+                            app:tint="@color/sl_accent" />
                         <TextView
                             android:id="@+id/btnConnectLabel"
                             android:layout_width="wrap_content"

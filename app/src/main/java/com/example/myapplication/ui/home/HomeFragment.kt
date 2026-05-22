@@ -106,8 +106,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         }
 
         binding.btnMayday.setOnClickListener {
-            Timber.tag("UI").d("btnMayday tap")
-            Toast.makeText(requireContext(), "119 긴급 신고 (구현 예정)", Toast.LENGTH_SHORT).show()
+            Timber.tag("UI").d("btnMayday tap → dialer 119")
+            val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:119"))
+            startActivity(intent)
         }
 
         binding.btnVoice.setOnClickListener {
@@ -332,6 +333,23 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         bindBodyRow(binding.rowArmR.root, getString(R.string.sl_body_arm_r), false, "--")
         bindBodyRow(binding.rowLegL.root, getString(R.string.sl_body_leg_l), false, "--")
         bindBodyRow(binding.rowLegR.root, getString(R.string.sl_body_leg_r), false, "--")
+
+        resetChartToBaseline()
+    }
+
+    /** 차트 값을 즉시 베이스라인 + 파랑 라인으로 초기화. */
+    private fun resetChartToBaseline() {
+        val chart = _binding?.activityChart ?: return
+        chartValues.clear()
+        repeat(chartMaxPoints) { chartValues.addLast(BASELINE) }
+        val entries = chartValues.mapIndexed { i, v -> Entry(i.toFloat(), v) }
+        val dataSet = (chart.data?.getDataSetByIndex(0) as? LineDataSet) ?: return
+        dataSet.values = entries
+        dataSet.color = col(R.color.sl_accent)
+        dataSet.fillColor = col(R.color.sl_accent)
+        chart.data.notifyDataChanged()
+        chart.notifyDataSetChanged()
+        chart.invalidate()
     }
 
     /** 연결됨, 아직 이벤트 없음 — 정상(NORMAL) 상태로 깔아둠. */
@@ -432,8 +450,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         val dataSet = (chart.data?.getDataSetByIndex(0) as? LineDataSet) ?: return
         dataSet.values = entries
 
-        // 시나리오 따라 라인 색 — alarm이면 빨강
-        val isAlarm = viewModel.sensorStatus.value?.isAlarm == true
+        // 연결중 + alarm이면 빨강, 그 외엔 액센트 블루
+        val isConnected = viewModel.connectionState.value is BleConnectionState.Connected
+        val isAlarm = isConnected && viewModel.sensorStatus.value?.isAlarm == true
         dataSet.color = col(if (isAlarm) R.color.sl_critical else R.color.sl_accent)
         dataSet.fillColor = col(if (isAlarm) R.color.sl_critical else R.color.sl_accent)
 
@@ -442,10 +461,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         chart.invalidate()
     }
 
-    /** 평상시 일자 — 충격/낙상/화재 등 알람 상태에서는 높게 튀어오름. */
+    /** 연결중 + 알람 상태일 때만 높게 튀어오름. 그 외엔 베이스라인. */
     private fun generateDummyValue(): Float {
         chartTickIdx++
-        val isAlarm = viewModel.sensorStatus.value?.isAlarm == true
+        val isConnected = viewModel.connectionState.value is BleConnectionState.Connected
+        val isAlarm = isConnected && viewModel.sensorStatus.value?.isAlarm == true
         return if (isAlarm) {
             val noise = (Random.nextFloat() - 0.5f) * 6f
             (85f + noise).coerceIn(5f, 95f)

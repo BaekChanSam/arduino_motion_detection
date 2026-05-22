@@ -2,14 +2,14 @@
     <string name="app_name">케어링크</string>
 
     <!-- header -->
-    <string name="sl_back_hq">◄ 홈</string>
+    <string name="sl_back_hq"></string>
     <string name="sl_ble_ok">장치 · 신호양호</string>
     <string name="sl_ble_idle">장치 · 대기</string>
     <string name="sl_ble_scanning">장치 · 스캔중</string>
     <string name="sl_ble_connecting">장치 · 연결중</string>
     <string name="sl_ble_disconnected">장치 · 끊김</string>
     <string name="sl_ble_error">장치 · 오류</string>
-    <string name="sl_member_id">부모님</string>
+    <string name="sl_member_id">아버지</string>
     <string name="sl_member_name">김 진 수</string>
     <string name="sl_member_role">76세 · 자택 거주</string>
     <string name="sl_elapsed_label">관찰 시간</string>
